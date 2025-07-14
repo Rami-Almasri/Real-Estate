@@ -19,14 +19,26 @@ class HousesService
     }
     public function create(array $data): House
     {
-        //$data['owner_id'] = Auth::id();
-        return House::create($data);
+        $house = House::create([
+            'district_id' => $data['district_id'],
+            'floor' => $data['floor'],
+            'office_id' => Auth::user()->userable_id,
+            'status' => $data['status'],
+            'rooms' => $data['rooms'],
+            'area' => $data['area'],
+            'direction' => $data['direction'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'price' => $data['price'],
+
+        ]);
+        return $house;
     }
 
     public function show(House $house): House
     {
-        if ($house->owner_id !== Auth::id()) {
-            throw new Exception('Unauthorized access to this house.');
+        if ($house->office_id !== Auth::user()->userable_id) {
+            throw new Exception('Unauthorized showing the house not belong to you.');
         }
 
         return $house;
@@ -34,18 +46,26 @@ class HousesService
 
     public function update(House $house, array $data): House
     {
-        if ($house->owner_id !== Auth::id()) {
-            throw new Exception('Unauthorized update attempt.');
-        }
+        $house->update([
+            'district_id' => $data['district_id'],
+            'floor' => $data['floor'],
+            'office_id' => Auth::user()->userable_id,
+            'status' => $data['status'],
+            'rooms' => $data['rooms'],
+            'area' => $data['area'],
+            'direction' => $data['direction'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'price' => $data['price'],
 
-        $house->update($data);
+        ]);
         return $house;
     }
 
     public function delete(House $house)
     {
-        if ($house->owner_id !== Auth::id()) {
-            throw new Exception('Unauthorized delete attempt.');
+        if ($house->office_id !== Auth::user()->userable_id) {
+            throw new Exception('Unauthorized delete the house not belong to you.');
         }
 
         $house->delete();

@@ -11,6 +11,9 @@ class UpdateHouseRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (auth()->check() && auth()->user()->userable_type == 'App\Models\Office' && auth()->user()->userable_id == $this->route('house')->office_id) {
+            return true;
+        }
         return false;
     }
 

@@ -11,6 +11,9 @@ class StoreHouseRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (auth()->check() && auth()->user()->userable_type == 'App\Models\Office') {
+            return true;
+        }
         return false;
     }
 

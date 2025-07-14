@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum'])->prefix('houses')->controller(HouseControlle
     Route::get('/', 'index');
     Route::post('/', 'store');
     Route::get('/{house}', 'show');
-    Route::put('/{house}', 'update');
+    Route::post('/{house}', 'update');
     Route::delete('/{house}', 'delete');
 });
 Route::middleware(['auth:sanctum'])->prefix('office')->controller(OfficeController::class)->group(function () {
