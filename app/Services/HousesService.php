@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Models\House;
+use App\Models\View;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class HousesService
 {
+    public $user_id;
     public function listUserHouses()
     {
         //return House::where('owner_id', Auth::id())->paginate(10);
@@ -37,9 +39,19 @@ class HousesService
 
     public function show(House $house): House
     {
+        /*
         if ($house->office_id !== Auth::user()->userable_id) {
             throw new Exception('Unauthorized showing the house not belong to you.');
         }
+*/
+
+        $this->user_id = Auth::user()->id;
+
+        $view = View::create([
+            'house_id' => $house->id,
+            'user_id' => $this->user_id
+
+        ]);
 
         return $house;
     }

@@ -14,6 +14,23 @@ class HouseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'office_id' => $this->office_id,
+            'district_id' => $this->district_id,
+            'price' => $this->price,
+            'status' => $this->status,
+            'type' => $this->type,
+            'area' => $this->area,
+            'rooms' => $this->rooms,
+            'floor' => $this->floor,
+            'direction' => $this->direction,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'viewsCount' => $this->view()->count(),
+            'averageRating' => $this->averageRating(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

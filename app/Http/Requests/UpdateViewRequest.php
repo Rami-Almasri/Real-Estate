@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateViewRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class UpdateViewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'house_id' => 'required|exists:houses,id',
+            'user_id' => 'required|exists:users,id',
         ];
+    }
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => Auth::user()->id
+        ]);
     }
 }

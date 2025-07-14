@@ -5,6 +5,8 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\RateController;
+use App\Http\Middleware\LocalMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +18,7 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::prefix('auth')->group(function () {
+Route::middleware(LocalMiddleware::class)->prefix('auth')->group(function () {
     Route::post('signup', [AuthController::class, "signup"]);
     Route::post('login', [AuthController::class, "login"]);
     Route::post('logout', [AuthController::class, 'logout']);
@@ -63,4 +65,11 @@ Route::controller(DistrictController::class)->prefix('districts')->group(functio
     Route::post('/', 'store');
     Route::post('/{district}', 'update');
     Route::delete('/{district}', 'destroy');
+});
+
+
+
+Route::middleware(LocalMiddleware::class)->prefix('rates')->group(function () {
+    Route::post('store', [RateController::class, "store"]);
+    Route::post('update/{rate}', [RateController::class, "update"]);
 });

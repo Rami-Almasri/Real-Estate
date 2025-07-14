@@ -9,4 +9,9 @@ class Rate extends Model
 {
     /** @use HasFactory<\Database\Factories\RateFactory> */
     use HasFactory;
+    protected $fillable = [
+        'rating',
+        'user_id',
+        'house_id'
+    ];
 }

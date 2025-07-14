@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateRateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateRateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::guard('api')->check();
     }
 
     /**
@@ -22,7 +23,16 @@ class UpdateRateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'rating' => 'required|integer|min:0',
+            'house_id' => 'required|exists:houses,id',
+            'user_id' => 'required|exists:users,id',
         ];
+    }
+    protected function prepareForValidation(): void
+    {
+
+        $this->merge([
+            'user_id' => Auth::guard('api')->user()->id
+        ]);
     }
 }
