@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ApiResponse;
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\FilterHouserRequest;
 use App\Models\House;
 use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
@@ -84,5 +85,11 @@ class HouseController extends Controller
         } catch (Exception $e) {
             return ResponseHelper::FailureResponse(null, $e->getMessage(), 500);
         }
+    }
+    public function filter(FilterHouserRequest $request)
+    {
+        $filter = $this->houseService->filter($request->validated());
+        $result = HouseResource::collection($filter);
+        return ResponseHelper::SuccessResponse($result);
     }
 }

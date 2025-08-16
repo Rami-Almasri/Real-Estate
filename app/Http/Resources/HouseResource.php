@@ -27,8 +27,10 @@ class HouseResource extends JsonResource
             'direction' => $this->direction,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'viewsCount' => $this->view()->count(),
+            // 'viewsCount' => $this->view()->count(),
             'averageRating' => $this->averageRating(),
+            'viewsCount' => $this->view_count ?? 0,
+
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

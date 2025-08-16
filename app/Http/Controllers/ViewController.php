@@ -37,7 +37,7 @@ class ViewController extends Controller
      */
     public function show(View $view)
     {
-        //
+        
     }
 
     /**

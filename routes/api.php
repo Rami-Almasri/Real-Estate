@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum'])->prefix('houses')->controller(HouseControlle
 
     Route::get('/', 'index');
     Route::post('/', 'store');
+    Route::post('/filter', 'filter');
     Route::get('/{house}', 'show');
     Route::post('/{house}', 'update');
     Route::delete('/{house}', 'delete');

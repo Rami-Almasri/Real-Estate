@@ -16,8 +16,8 @@ class HousesService
     }
     public function index()
     {
-        $houses = House::all();
-        return $houses;
+        return House::withCount('view')
+            ->get();
     }
     public function create(array $data): House
     {
@@ -27,6 +27,7 @@ class HousesService
             'office_id' => Auth::user()->userable_id,
             'status' => $data['status'],
             'rooms' => $data['rooms'],
+            'type' => $data['type'],
             'area' => $data['area'],
             'direction' => $data['direction'],
             'latitude' => $data['latitude'],
@@ -39,19 +40,26 @@ class HousesService
 
     public function show(House $house): House
     {
-        /*
-        if ($house->office_id !== Auth::user()->userable_id) {
-            throw new Exception('Unauthorized showing the house not belong to you.');
+        $user = Auth::user();
+
+        if ($user) {
+            $this->user_id = $user->id;
+
+            $alreadyViewed = $house->view()
+                ->where('user_id', $this->user_id)
+                ->exists();
+
+            if (!$alreadyViewed) {
+                View::create([
+                    'house_id' => $house->id,
+                    'user_id' => $this->user_id
+                ]);
+            }
         }
-*/
 
-        $this->user_id = Auth::user()->id;
 
-        $view = View::create([
-            'house_id' => $house->id,
-            'user_id' => $this->user_id
+        $house->loadCount('view');
 
-        ]);
 
         return $house;
     }
@@ -82,5 +90,26 @@ class HousesService
 
         $house->delete();
         return $house;
+    }
+    public function filter(array $data)
+    {
+        $query = House::query();
+
+        if (!empty($data['price'])) {
+            $query->where('price', ">=", $data['price']);
+        }
+
+        if (!empty($data['type'])) {
+            $query->where('type', $data['type']);
+        }
+
+        if (!empty($data['rooms'])) {
+            $query->where('rooms', '<=', $data['rooms']);
+        }
+
+        // تحميل عدد المشاهدات ومتوسط التقييم
+        $query->withCount('view');
+
+        return $query->get();
     }
 }
