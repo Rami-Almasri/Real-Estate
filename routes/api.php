@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\RateController;
@@ -73,4 +74,10 @@ Route::controller(DistrictController::class)->prefix('districts')->group(functio
 Route::middleware(LocalMiddleware::class)->prefix('rates')->group(function () {
     Route::post('store', [RateController::class, "store"]);
     Route::post('update/{rate}', [RateController::class, "update"]);
+});
+
+Route::middleware('auth:sanctum')->prefix('favorites')->group(function () {
+    Route::get('/index', [FavoriteController::class, "index"]);
+    Route::post('/store', [FavoriteController::class, "store"]);
+    Route::delete('/destroy/{favorite}', [FavoriteController::class, "destroy"]);
 });

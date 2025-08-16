@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Favorite;
 use App\Models\House;
 use App\Models\View;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,7 @@ class HousesService
             'price' => $data['price'],
 
         ]);
+        $house->load('district');
         return $house;
     }
 
@@ -59,7 +61,7 @@ class HousesService
 
 
         $house->loadCount('view');
-
+        $house->load('district');
 
         return $house;
     }
@@ -79,6 +81,7 @@ class HousesService
             'price' => $data['price'],
 
         ]);
+        $house->load('district');
         return $house;
     }
 
@@ -89,6 +92,7 @@ class HousesService
         }
 
         $house->delete();
+        $house->load('district');
         return $house;
     }
     public function filter(array $data)
@@ -109,7 +113,7 @@ class HousesService
 
         // تحميل عدد المشاهدات ومتوسط التقييم
         $query->withCount('view');
-
+        $query->load('district');
         return $query->get();
     }
 }

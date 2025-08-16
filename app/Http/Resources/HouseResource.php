@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,8 @@ class HouseResource extends JsonResource
         return [
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'district_id' => $this->district_id,
+            'district' => DistrictResourse::make($this->whenLoaded('district')),
+
             'price' => $this->price,
             'status' => $this->status,
             'type' => $this->type,

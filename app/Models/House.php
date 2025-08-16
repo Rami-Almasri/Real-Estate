@@ -41,6 +41,10 @@ class House extends Model implements HasMedia
     {
         return $this->belongsTo(District::class);
     }
+    public function favortie()
+    {
+        return $this->hasMany(Favorite::class, 'house_id');
+    }
     public function averageRating(): float
     {
         $ratings = $this->rate()->pluck('rating');
