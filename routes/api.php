@@ -44,6 +44,11 @@ Route::middleware(['auth:sanctum'])->prefix('office')->controller(OfficeControll
     Route::get('/{office}', 'show');
     Route::post('/{office}', 'update');
     Route::delete('/{office}', 'delete');
+
+    Route::prefix('/Dashboard')->group(function () {
+
+        Route::get('/detils', 'detils');
+    });
 });
 
 
@@ -71,9 +76,9 @@ Route::controller(DistrictController::class)->prefix('districts')->group(functio
 
 
 
-Route::middleware(LocalMiddleware::class)->prefix('rates')->group(function () {
-    Route::post('store', [RateController::class, "store"]);
-    Route::post('update/{rate}', [RateController::class, "update"]);
+Route::middleware(LocalMiddleware::class)->controller(RateController::class)->prefix('rates')->group(function () {
+    Route::post('store',  "store");
+    Route::post('update/{rate}', "update");
 });
 
 Route::middleware('auth:sanctum')->prefix('favorites')->group(function () {

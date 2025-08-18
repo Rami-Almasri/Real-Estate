@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\House;
 use App\Models\Office;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -69,5 +70,22 @@ class OfficeService
     {
         $office->delete();
         return $office;
+    }
+    public function info()
+    {
+        $officeId = Auth::user()->userable_id;
+
+        return [
+            'total_houses'     => House::where('office_id', $officeId)->count(),
+            'all_houses'       => House::where('office_id', $officeId)->withCount('view')->with('district')->get(),
+            'occupied_rent'    => House::where('office_id', $officeId)
+                ->where('status', 'occupied')
+                ->where('type', 'rent')
+                ->get(),
+            'occupied_sale'    => House::where('office_id', $officeId)
+                ->where('status', 'occupied')
+                ->where('type', 'sale')
+                ->get(),
+        ];
     }
 }

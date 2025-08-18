@@ -79,4 +79,20 @@ class OfficeController extends Controller
             return ResponseHelper::FailureResponse(null, $e->getMessage(), 500);
         }
     }
+    public function detils()
+    {
+        $myhouse = $this->officeService->info();
+        return Response()->json([
+
+            'data' => [
+                'myhouse' => $myhouse['total_houses'],
+                'all_houses' => $myhouse['all_houses'],
+                'occupied_rent' => $myhouse['occupied_rent'],
+                'occupied_sale' => $myhouse['occupied_sale']
+            ],
+            'msg' => 'success return data',
+            'success' => true
+
+        ]);
+    }
 }
