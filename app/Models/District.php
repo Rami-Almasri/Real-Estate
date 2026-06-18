@@ -15,4 +15,14 @@ class District extends Model
         'longitude',
         'latitude',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
 }

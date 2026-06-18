@@ -52,4 +52,35 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
+
+    public function preferences()
+    {
+        return $this->hasMany(Preference::class);
+    }
+
+    public function matchNotifications()
+    {
+        return $this->hasMany(MatchNotification::class);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /** The office this user owns, if they are an office account (else null). */
+    public function getOfficeAttribute(): ?Office
+    {
+        return $this->isOffice() ? $this->userable : null;
+    }
+
+    public function isOffice(): bool
+    {
+        return $this->userable_type === Office::class;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->userable_type === Admin::class;
+    }
 }

@@ -1,61 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🏛️ عقّار سوريا · Aqar Syria
 
-## About Laravel
+### المنصة العقارية الذكية — من دفاتر الورق إلى ذكاء السوق
+**The smart real-estate platform for Syria — from paper notebooks to market intelligence.**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel 12 · Tailwind · Alpine · GSAP · Chart.js · Leaflet · dompdf
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ الفكرة
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+سوق العقارات في سوريا في حالة "فوران" لكنه عشوائي، والمكاتب الكبيرة ما زالت تعتمد على الورق.
+**عقّار سوريا** يحوّل المكتب العقاري إلى منصة مدعومة بالبيانات، ويُباع للمكاتب باشتراك شهري (SaaS).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🔥 المزايا الأساسية (Core Features)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| الميزة | الوصف |
+|---|---|
+| ⚡ **خوارزمية المطابقة** | المشتري يحفظ مواصفاته (منطقة، نوع، سعر، غرف، مساحة)، والنظام يفلتر آلاف العقارات فوراً ويُنشئ إشعار مطابقة مع **درجة تطابق** عند نشر أي عقار جديد. |
+| 📊 **لوحة تحليل السوق** | متوسط **سعر المتر** لكل منطقة ومدينة بناءً على بيانات حقيقية، اتجاه الأسعار آخر 6 أشهر، توزّع البيع/الإيجار، ومؤشر **العرض مقابل الطلب** — مرجع المستثمرين. |
+| 📄 **أتمتة العقود** | توليد عقود إيجار/بيع **PDF احترافية بالعربية** (RTL + خط Amiri) خلال ثوانٍ، مع **تنبيهات استحقاق** ذكية (متأخر / يستحق قريباً). |
+| 💎 **اشتراكات المكاتب** | ثلاث باقات (الأساسية/الاحترافية/النخبة) تتحكّم بحد العقارات وتفتح المزايا. هي طبقة الإيرادات. |
 
-## Laravel Sponsors
+بالإضافة إلى: تصفّح وفلترة العقارات، صفحة عقار بخريطة Leaflet، تتبّع المشاهدات والتقييمات، طلبات المشترين (Leads) للمكتب، وواجهة عربية فاخرة (RTL) بحركات GSAP/AOS.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🏗️ المعمارية (Architecture)
 
-### Premium Partners
+- **Backend:** Laravel 12, طبقة خدمات (`app/Services`): `MatchingService`, `AnalyticsService`, `ContractService`, `SubscriptionService`.
+- **Auth:** جلسات الويب (web guard) للواجهة + Sanctum للـ API. مستخدمون متعدّدو الأنماط (`userable`) — مكتب / مشترٍ / أدمن.
+- **DB:** SQLite جاهزة فوراً (قابلة للتبديل إلى MySQL عبر `.env`).
+- **PDF:** `barryvdh/laravel-dompdf` + `khaled.alshamaa/ar-php` لتشكيل الحروف العربية + خط Amiri مضمّن.
+- **Frontend:** Blade + Tailwind (Play CDN) + Alpine.js + GSAP/ScrollTrigger + AOS + Chart.js + Leaflet.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+نماذج جديدة: `Preference`, `MatchNotification`, `Contract` — وتحسينات على `House`, `Office`, `Subsbcribe`.
 
-## Contributing
+## 🚀 التشغيل (Setup)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+npm install                 # اختياري (الأصول عبر CDN)
+cp .env.example .env        # أو استخدم .env الجاهز (SQLite)
+php artisan key:generate
+php artisan migrate:fresh --seed   # ينشئ بيانات تجريبية غنية
+php artisan storage:link
+php artisan serve            # http://127.0.0.1:8000
+```
 
-## Code of Conduct
+> يتطلب توليد عقود الـPDF إضافة ar-php و dompdf (مثبّتة عبر composer). الخطوط في `storage/fonts`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🔑 حسابات تجريبية (Demo Accounts)
 
-## Security Vulnerabilities
+| الدور | البريد | كلمة المرور |
+|---|---|---|
+| 🏢 مكتب عقاري (Elite) | `office@gmail.com` | `111111` |
+| 🏢 مكتب (Pro) | `qasr@aqar.sy` | `111111` |
+| 🔍 مشترٍ | `test@gmail.com` | `111111` |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🗺️ خريطة الصفحات
 
-## License
+`/` الرئيسية · `/listings` العقارات · `/listings/{id}` تفاصيل عقار · `/market` تحليل السوق ·
+`/match` المطابقة الذكية · `/pricing` الباقات · `/dashboard/*` لوحة المكتب (عقارات، طلبات، عقود، اشتراك) ·
+`/account/matches` مطابقات المشتري.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📦 البيانات التجريبية
+
+5 مكاتب · 64 عقاراً موزّعة على 5 مدن و13 منطقة · 9 مشترين بطلبات محفوظة · عقود بمواعيد استحقاق متنوّعة ·
+آلاف المشاهدات والتقييمات — لتظهر اللوحات والتحليلات حيّة.
+
+---
+
+<div align="center">
+صُمّم بشغف لسوق العقارات السوري 🇸🇾
+</div>

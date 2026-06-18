@@ -14,4 +14,9 @@ class City extends Model
         'latitude',
         'longitude'
     ];
+
+    public function districts()
+    {
+        return $this->hasMany(District::class);
+    }
 }
